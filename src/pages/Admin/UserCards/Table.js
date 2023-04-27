@@ -1,23 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import useFetch from "../../../hooks/useFetch";
 import Loading from "../../../components/Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
-import drivers from "../../../data/drivers.json";
-import useCarFetch from "../../../hooks/useCarFetch";
 import { visibilityChange } from "../../../redux/modalSlice";
 import { addRoute } from "../../../redux/routeSlice";
-import Modal from "../../../components/Modal/Modal";
-import ExcelJS from "exceljs";
-import moment from "moment";
+import UserCardModal from "../../../components/Modal/NewUserCardModal/UserCardModal";
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from "react-tooltip";
 
 function Table({ cards, reFetchUser }) {
   const { data, loading, error } = useFetch(`/private/usercard`);
 
   const user = useSelector((state) => state.users.user);
 
-  const modal = useSelector((state) => state.modals.modal);
+  const [userCardModalShow, setUserCardModalShow] = useState(false);
+  console.log('modal --> ', userCardModalShow);
 
   const dispatch = useDispatch();
 
@@ -45,22 +44,33 @@ function Table({ cards, reFetchUser }) {
     } else {
       toast.error(data.message);
     }
-    reFetchUser();
+    await reFetchUser();
+  }
+
+  const openNewCardModal = async () => {
+    setUserCardModalShow(true);
+    console.log(1);
   }
 
   return (
     <div className="bg-gray-100 flex flex-col items-center justify-center font-sans overflow-auto">
+      <Tooltip anchorSelect=".tooltipSoon" place="top">Yakında!</Tooltip>
       {loading && <Loading></Loading>}
       {!loading && (
         <>
-          <div className="w-full flex flex-col items-end justify-end disabled">
-            <button
-              disabled={true}
-              className="px-3 py-1 text-white font-light tracking-wider bg-green-500 rounded"
-            >
-              <i class="fas fa-file-excel"></i>
-            </button>
-          </div>
+            <div className="w-full flex flex-row items-center justify-between">
+              {userCardModalShow && <UserCardModal setUserCardModalShow={setUserCardModalShow}></UserCardModal>}
+              <button onClick={() => openNewCardModal()} className="bg-green-500 text-white tracking-wider font-light rounded px-3 py-1 cursor-pointer">
+                <i className="fas fa-plus text-sm"></i>
+                <label className="pl-2 cursor-pointer">Yeni Kart Ekle!</label>
+              </button>
+              <div
+                disabled={true}
+                className="px-3 py-1 text-white font-light tracking-wider bg-gray-300 rounded outline-none"
+              >
+                <i className="fas fa-file-excel outline-none tooltipSoon"></i>
+              </div>
+            </div>
           <div className="w-full">
             <div className="bg-white shadow-md rounded my-6">
               <table className="min-w-max w-full table-auto">
@@ -97,18 +107,18 @@ function Table({ cards, reFetchUser }) {
                         </td>
                         <td className="py-4 px-8 text-center">
                           <div className="flex item-center justify-center">
-                            <Link
-                              onClick={() => handleDetailRoute()}
-                              className="w-4 mr-2 transform hover:text-blue-500 hover:scale-110 cursor:pointer"
+                            <div
+                              // onClick={() => handleDetailRoute()}
+                              className="w-4 mr-2 transform tooltipSoon"
                             >
-                              <i class="fas fa-info-circle"></i>
-                            </Link>
-                            <Link
+                              <i className="fas fa-info-circle"></i>
+                            </div>
+                            <div
                               to={`/edit-fleet/${card.id}`}
-                              className="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor:pointer"
+                              className="w-4 mr-2 transform tooltipSoon"
                             >
                               <i className="fas fa-pen"></i>
-                            </Link>
+                            </div>
                             <Link
                               onClick={() => handleDeleteUserCard(card.id)}
                               className="w-4 mr-2 transform hover:text-red-500 hover:scale-110 cursor:pointer"

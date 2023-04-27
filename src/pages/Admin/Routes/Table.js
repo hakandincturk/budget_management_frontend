@@ -8,7 +8,7 @@ import drivers from "../../../data/drivers.json";
 import useCarFetch from "../../../hooks/useCarFetch";
 import { visibilityChange } from "../../../redux/modalSlice";
 import { addRoute } from "../../../redux/routeSlice";
-import Modal from "../../../components/Modal/Modal";
+// import Modal from "../../../components/NewUserCardModal/UserCardModal";
 import ExcelJS from "exceljs";
 import moment from "moment";
 
@@ -158,7 +158,7 @@ function Table({ routes, reFetchUser }) {
             </button>
           </div>
           <div className="w-full">
-            {modal && <Modal car={car}></Modal>}
+            {/* {modal && <Modal car={car}></Modal>} */}
             <div className="bg-white shadow-md rounded my-6">
               <table className="min-w-max w-full table-auto">
                 <thead>

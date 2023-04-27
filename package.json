@@ -15,6 +15,7 @@
     "hmkit": "^13.2.0",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
+    "payment": "^2.4.6",
     "react": "^18.2.0",
     "react-countup": "^6.4.2",
     "react-dom": "^18.2.0",
@@ -22,6 +23,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
+    "react-tooltip": "^5.11.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
