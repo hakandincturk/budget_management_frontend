@@ -4,7 +4,7 @@ import { visibilityChange } from "../../../redux/modalSlice";
 import { formatCVC, formatCreditCardNumber, formatExpirationDate } from "../../../helpers/cardHelper";
 import { toast } from "react-hot-toast";
 
-export default function Modal({setUserCardModalShow}) {
+export default function Modal({setUserCardModalShow, reFetchUser}) {
   const dispatch = useDispatch();
 
   const [cardName, setCardName] = useState('')
@@ -23,7 +23,6 @@ export default function Modal({setUserCardModalShow}) {
 
   const handleSubmitForm = async (e) => {
     try {
-      console.log('submit form')
       const requestBody = {
         name: cardName,
         number: cardNumber,
@@ -31,7 +30,26 @@ export default function Modal({setUserCardModalShow}) {
         expire_date: expireDate,
         limit: limit
       }
-      console.log(requestBody);
+
+      const res = await fetch(
+        `${process.env.REACT_APP_MAIN_URL}/private/usercard`,
+        {
+          method: "POST",
+          body: JSON.stringify(requestBody),
+          headers: {
+            "Content-Type": "application/json",
+            "access-token": localStorage.getItem("access-token"),
+          },
+        }
+      );
+      const data = await res.json();
+      if (data.type) {
+        toast.success(data.message, {duration: 3000});
+      } else {
+        toast.error(data.message, {duration: 3000});
+      }
+      await reFetchUser();
+
       setUserCardModalShow(false); 
     } catch (error) {
       toast.error('Beklenmedik bir hata oluştu!!')

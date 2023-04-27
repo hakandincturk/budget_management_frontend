@@ -25,7 +25,7 @@ export default function Login() {
     try {
       const res = await axios.post(`${process.env.REACT_APP_MAIN_URL}/auth/login`, user);
       if (!res.data.type) {
-        toast.error(res.data.message);  
+        await toast.error(res.data.message);  
       }
       else{
         const decoded = await jwt_decode(res.data.data.token);
@@ -36,7 +36,7 @@ export default function Login() {
       }
       
     } catch (error) {
-      toast.error(error.response.data);
+      await toast.error(error.response.data);
     }
   };
 

@@ -26,7 +26,7 @@ function ListUserCards() {
                 Aktif kartiniz bulunmamaktadir
               </>
             ) : (
-              <Table cards={data.data.userCards} reFetchUser={reFetchUser}></Table>  
+              <Table cards={data.data.userCards} loading={loading} reFetchUser={reFetchUser}></Table>  
             )}
           </main>
         )}

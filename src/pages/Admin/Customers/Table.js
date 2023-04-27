@@ -116,7 +116,6 @@ function Table({ data, reFetchUser }) {
           </table>
         </div>
       </div>
-      <Toaster position="top-right" />
     </div>
   );
 }

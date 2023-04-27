@@ -31,10 +31,10 @@ function AddCustomer() {
         //   dispatch(login(res.data));
         // toast.success("Müşteri kaydedildi!");
       } else {
-        toast.error("Şifreler eşleşmiyor !");
+        await toast.error("Şifreler eşleşmiyor !");
       }
     } catch (error) {
-      toast.error(error.response.data);
+      await toast.error(error.response.data);
     }
   };
 

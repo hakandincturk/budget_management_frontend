@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import useFetch from "../../../hooks/useFetch";
 import Loading from "../../../components/Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,22 +10,21 @@ import UserCardModal from "../../../components/Modal/NewUserCardModal/UserCardMo
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from "react-tooltip";
 
-function Table({ cards, reFetchUser }) {
-  const { data, loading, error } = useFetch(`/private/usercard`);
+function Table({ cards, loading,  reFetchUser }) {
+  // const { data, loading, error } = useFetch(`/private/usercard`);
 
-  const user = useSelector((state) => state.users.user);
+  // const user = useSelector((state) => state.users.user);
 
   const [userCardModalShow, setUserCardModalShow] = useState(false);
-  console.log('modal --> ', userCardModalShow);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // const filtered = data.filter((item) => item.fleetOwner === user._id);
 
-  const handleDetailRoute = (route) => {
-    dispatch(addRoute(route));
-    dispatch(visibilityChange(true));
-  };
+  // const handleDetailRoute = (route) => {
+  //   dispatch(addRoute(route));
+  //   dispatch(visibilityChange(true));
+  // };
 
   const handleDeleteUserCard = async (id) => {
     const res = await fetch(
@@ -40,16 +39,15 @@ function Table({ cards, reFetchUser }) {
     );
     const data = await res.json();
     if (data.type) {
-      toast.success(data.message);
+      await toast.success(data.message, {duration: 3000});
+      await reFetchUser();
     } else {
-      toast.error(data.message);
+      await toast.error(data.message, {duration: 3000});
     }
-    await reFetchUser();
   }
 
   const openNewCardModal = async () => {
     setUserCardModalShow(true);
-    console.log(1);
   }
 
   return (
@@ -59,7 +57,7 @@ function Table({ cards, reFetchUser }) {
       {!loading && (
         <>
             <div className="w-full flex flex-row items-center justify-between">
-              {userCardModalShow && <UserCardModal setUserCardModalShow={setUserCardModalShow}></UserCardModal>}
+              {userCardModalShow && <UserCardModal setUserCardModalShow={setUserCardModalShow} reFetchUser={reFetchUser}></UserCardModal>}
               <button onClick={() => openNewCardModal()} className="bg-green-500 text-white tracking-wider font-light rounded px-3 py-1 cursor-pointer">
                 <i className="fas fa-plus text-sm"></i>
                 <label className="pl-2 cursor-pointer">Yeni Kart Ekle!</label>
@@ -94,7 +92,9 @@ function Table({ cards, reFetchUser }) {
                           <span>{card.name}</span>
                         </td>
                         <td className="py-4 px-8 text-center">
-                          <span>{card.number}</span>
+                          <span className="cursor-pointer" onClick={() => {navigator.clipboard.writeText(card.number)}}>
+                            {card.number}
+                          </span>
                         </td>
                         <td className="py-4 px-8 text-center">
                           <span>{card.expire_date}</span>
@@ -136,7 +136,7 @@ function Table({ cards, reFetchUser }) {
           </div>
         </>
       )}
-      <Toaster position="top-right" />
+      {/* <Toaster position="top-right" /> */}
     </div>
   );
 }
