@@ -17,10 +17,14 @@ import Login from "./pages/Admin/Login";
 import Register from "./pages/Admin/Register";
 import ListRoutes from "./pages/Admin/Routes/ListRoutes";
 import UserCards from "./pages/Admin/UserCards/ListUserCards";
+import Outgoings from "./pages/Admin/Outgoings/Outgoings";
 
 
 function App() {
-  const user = useSelector((state) => state.users.user);
+  let user = useSelector((state) => state.users.user);
+  if ((Date.now() / 1000) > user.exp) {
+    user = null;
+  }
 
   return (
     <Router>
@@ -38,6 +42,7 @@ function App() {
         <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />}></Route>
 
         <Route path="/usercards" element={user ? <UserCards /> : <Navigate to="/login" />}></Route>
+        <Route path="/outgoings" element={user ? <Outgoings /> : <Navigate to="/login" />}></Route>
 
 
       </Routes>

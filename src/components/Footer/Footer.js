@@ -6,8 +6,8 @@ function Footer() {
       {" "}
       <footer className="w-full bg-white text-right p-4">
         Built by{" "}
-        <a target="_blank" href="https://davidgrzyb.com" className="underline">
-          David Grzyb
+        <a target="_blank" href="https://github.com/hakandincturk" className="underline" rel="noreferrer">
+          Hakan DINCTURK
         </a>
         .
       </footer>

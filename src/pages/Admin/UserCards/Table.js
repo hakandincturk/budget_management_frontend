@@ -71,7 +71,7 @@ function Table({ cards, loading,  reFetchUser }) {
             </div>
           <div className="w-full">
             <div className="bg-white shadow-md rounded my-6">
-              <table className="min-w-max w-full table-auto">
+              <table className="min-w-max w-full table-auto bg-white">
                 <thead>
                   <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                     <th className="py-4 px-8 text-center">Ismi</th>

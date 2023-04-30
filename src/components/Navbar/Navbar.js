@@ -74,6 +74,16 @@ function Navbar() {
           </Link>
           <Link
             className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
+              window.location.pathname === "/outgoings" &&
+              "active-nav-link opacity-100"
+            }`}
+            to="/outgoings"
+          >
+            <i className="fas fa-credit-card mr-3"></i>
+            Giderler
+          </Link>
+          <Link
+            className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
               window.location.pathname === "/fleets" &&
               "active-nav-link opacity-100"
             }`}
