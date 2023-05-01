@@ -5,6 +5,11 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { logout } from "./redux/userSlice";
+
+
 import AddCustomer from "./pages/Admin/Customers/AddCustomer";
 import Customers from "./pages/Admin/Customers/Customers";
 import EditCustomer from "./pages/Admin/Customers/EditCustomer";
@@ -18,12 +23,16 @@ import Register from "./pages/Admin/Register";
 import ListRoutes from "./pages/Admin/Routes/ListRoutes";
 import UserCards from "./pages/Admin/UserCards/ListUserCards";
 import Outgoings from "./pages/Admin/Outgoings/Outgoings";
-
+  
 
 function App() {
+  const dispatch = useDispatch();
   let user = useSelector((state) => state.users.user);
   if ((Date.now() / 1000) > user.exp) {
-    user = null;
+    dispatch(logout());
+    localStorage.removeItem("user");
+    localStorage.removeItem("access-token");
+    user = false;
   }
 
   return (

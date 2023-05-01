@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Loading from "../../../components/Loading/Loading";
 import OutgoingDetailModal from "../../../components/Modal/OutgoingModal/OutgoingDetailModal";
+import NewOutgoingModal from "../../../components/Modal/OutgoingModal/NewOutgoingModal";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from "react-tooltip";
 
@@ -9,6 +10,7 @@ import 'moment/locale/tr'
 // moment.locale("tr");
 
 function Table({ outgoings, loading,  reFetchUser }) {
+  const [newOutgoingModalShow, setNewOutgoingModalShow] = useState(false);
   const [outgoingDetailModalShow, setOutgoingDetailModalShow] = useState(false);
   const [outgoingId, setOutgoingId] = useState(0);
 
@@ -29,11 +31,11 @@ function Table({ outgoings, loading,  reFetchUser }) {
         <>
             <div className="w-full flex flex-row items-center justify-between">
             {outgoingDetailModalShow && <OutgoingDetailModal outgoingId={outgoingId} setOutgoingDetailModalShow={setOutgoingDetailModalShow} reFetchUser={reFetchUser}></OutgoingDetailModal>}
-              {/* {userCardModalShow && <UserCardModal setUserCardModalShow={setUserCardModalShow} reFetchUser={reFetchUser}></UserCardModal>}
-              <button onClick={() => openNewCardModal()} className="bg-green-500 text-white tracking-wider font-light rounded px-3 py-1 cursor-pointer">
+              {newOutgoingModalShow && <NewOutgoingModal setNewOutgoingModalShow={setNewOutgoingModalShow} reFetchOutogings={reFetchUser}></NewOutgoingModal>}
+              <button onClick={() => setNewOutgoingModalShow(true)} className="bg-green-500 text-white tracking-wider font-light rounded px-3 py-1 cursor-pointer">
                 <i className="fas fa-plus text-sm"></i>
                 <label className="pl-2 cursor-pointer">Yeni Gider Ekle</label>
-              </button> */}
+              </button>
               <div
                 disabled={true}
                 className="px-3 py-1 text-white font-light tracking-wider bg-gray-300 rounded outline-none"

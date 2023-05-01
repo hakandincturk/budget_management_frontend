@@ -49,7 +49,7 @@ function InstallmentTable({ installments, reFetchUser }) {
                           <span>{tlCurr.format(installment.amount)}</span>
                         </td>
                         <td className="py-4 px-8 text-center">
-                          <span>{tlCurr.format((installment.installment - 1) * installment.amount)}</span>
+                          <span>{tlCurr.format(((installment.installment === 0 ? 1 : installment.installment ) - 1) * installment.amount)}</span>
                         </td>
                         <td className="py-4 px-8 text-center">
                           <span>{installment.is_paid ? <span className="text-green-600">Ödendi</span> : <span className="text-red-600">Ödenmedi</span> }</span>

@@ -23,18 +23,22 @@ export default function Login() {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${process.env.REACT_APP_MAIN_URL}/auth/login`, user);
-      if (!res.data.type) {
-        await toast.error(res.data.message);  
+      if (user.email === undefined || user.password === undefined) {
+        toast.error('Bütün alanları doldurunuz.')
       }
-      else{
-        const decoded = await jwt_decode(res.data.data.token);
-        localStorage.setItem("user", JSON.stringify(decoded));
-        localStorage.setItem("access-token", res.data.data.token);
-        dispatch(login(decoded));
-        navigate("/");
+      else {
+        const res = await axios.post(`${process.env.REACT_APP_MAIN_URL}/auth/login`, user);
+        if (!res.data.type) {
+          await toast.error(res.data.message);  
+        }
+        else{
+          const decoded = await jwt_decode(res.data.data.token);
+          localStorage.setItem("user", JSON.stringify(decoded));
+          localStorage.setItem("access-token", res.data.data.token);
+          dispatch(login(decoded));
+          navigate("/");
+        }
       }
-      
     } catch (error) {
       await toast.error(error.response.data);
     }
@@ -74,6 +78,11 @@ export default function Login() {
                   placeholder="E-mail"
                   id="email"
                   onChange={handleChange}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleClick(e);
+                    }
+                  }}
                   className="border-0 px-3 py-3 placeholder-Gray-300 text-Gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 />
               </div>
@@ -90,6 +99,11 @@ export default function Login() {
                   placeholder="Password"
                   id="password"
                   onChange={handleChange}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleClick(e);
+                    }
+                  }}
                   className="border-0 px-3 py-3 placeholder-Gray-300 text-Gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 />
               </div>
@@ -122,12 +136,12 @@ export default function Login() {
                 </a>{" "}
                 by{" "}
                 <a
-                  href="https://github.com/Cengizhnx"
+                  href="https://github.com/hakandincturk"
                   className="text-gray-500 hover:text-gray-900"
                   target="_blank" rel="noreferrer"
                 >
                   {" "}
-                  Cengizhnx
+                  Hakan DINCTURK
                 </a>
                 .
               </div>
