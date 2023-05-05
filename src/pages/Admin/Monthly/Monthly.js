@@ -6,35 +6,38 @@ import Navbar from "../../../components/Navbar/Navbar";
 import useFetch from "../../../hooks/useFetch";
 import Table from "./Table";
 
+import { useSelector, useDispatch } from "react-redux";
+import { setMonth, setYear } from "../../../redux/monthlyInstallmentSlice";
+
 import moment from "moment";
 import 'moment/locale/tr'
 
 function Monthly() {
-  const [selectedMonth, setSelectedMonth] = useState(moment().month() + 1);
-  const [selectedYear, setSelectedYear] = useState(moment().year());
+
+  const dispatch = useDispatch();
+
+  const selectedMonth = useSelector((state) => state.monthlyInstallment.month);
+  const selectedYear = useSelector((state) => state.monthlyInstallment.year);
 
   const { data, loading, error, reFetchUser } = useFetch(`/private/installment/specificMonth/${selectedYear}/${selectedMonth}`);
 
-  console.log('selectedMonth -->', selectedMonth);
-  console.log('selectedYear -->', selectedYear);
-  
   const nextMonth = () => {
     console.log(1);
     if (selectedMonth === 12) {
-      setSelectedMonth(1);
-      setSelectedYear(selectedYear + 1);
+      dispatch(setMonth(1));
+      dispatch(setYear(selectedYear + 1));
     } else {
-      setSelectedMonth(selectedMonth + 1);
+      dispatch(setMonth(selectedMonth + 1));
     }
   }
 
   const prevMonth = () => {
     console.log(2);
     if (selectedMonth === 1) {
-      setSelectedMonth(12);
-      setSelectedYear(selectedYear - 1);
+      dispatch(setMonth(12));
+      dispatch(setYear(selectedYear - 1));
     } else {
-      setSelectedMonth(selectedMonth - 1);
+      dispatch(setMonth(selectedMonth - 1));
     }
   }
 
