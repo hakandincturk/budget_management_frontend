@@ -64,6 +64,16 @@ function Navbar() {
           )}
           <Link
             className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
+              window.location.pathname === "/monthly" &&
+              "active-nav-link opacity-100"
+            }`}
+            to="/monthly"
+          >
+            <i className="fas fa-th-list mr-3"></i>
+            Aylık Hesap
+          </Link>
+          <Link
+            className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
               window.location.pathname === "/usercards" &&
               "active-nav-link opacity-100"
             }`}
@@ -80,7 +90,7 @@ function Navbar() {
             to="/outgoings"
           >
             <i className="fas fa-credit-card mr-3"></i>
-            Giderler
+            Giderlerim
           </Link>
           <Link
             className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${

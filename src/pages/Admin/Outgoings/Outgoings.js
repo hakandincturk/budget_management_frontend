@@ -18,7 +18,7 @@ function Outgoings() {
         {loading && <Loading></Loading>}
         {!loading && (
           <main className="w-full flex-grow p-6">
-            <h1 className="text-3xl text-black pb-6">Giderler</h1>
+            <h1 className="text-3xl text-black pb-6">Giderlerim</h1>
             {data.data.userCards && data.data.userCards.length === 0 ? (
               <>
                 Herhangi bir gideriniz yok
