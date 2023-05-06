@@ -32,10 +32,16 @@ export default function Login() {
           await toast.error(res.data.message);  
         }
         else{
+          console.log('res.data.data.token -->', res.data.data.token);
+          console.log('res.data.data.roles -->', res.data.data.roles);
           const decoded = await jwt_decode(res.data.data.token);
           localStorage.setItem("user", JSON.stringify(decoded));
           localStorage.setItem("access-token", res.data.data.token);
-          dispatch(login(decoded));
+          // dispatch(login(decoded))
+          dispatch(login({
+            user: decoded,
+            roles: res.data?.data?.roles
+          }));
           navigate("/");
         }
       }
@@ -68,7 +74,7 @@ export default function Login() {
               <div className="relative w-full mb-3">
                 <label
                   className="block uppercase tracking-wide text-Gray-600 text-xs font-bold mb-2"
-                  for="grid-password"
+                  htmlFor="grid-password"
                 >
                   E-mail
                 </label>
@@ -89,7 +95,7 @@ export default function Login() {
               <div className="relative w-full mb-3">
                 <label
                   className="block uppercase tracking-wide text-Gray-600 text-xs font-bold mb-2"
-                  for="grid-password"
+                  htmlFor="grid-password"
                 >
                   Password
                 </label>

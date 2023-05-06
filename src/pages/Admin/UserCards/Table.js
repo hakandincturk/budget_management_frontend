@@ -11,20 +11,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from "react-tooltip";
 
 function Table({ cards, loading,  reFetchUser }) {
-  // const { data, loading, error } = useFetch(`/private/usercard`);
-
-  // const user = useSelector((state) => state.users.user);
-
   const [userCardModalShow, setUserCardModalShow] = useState(false);
-
-  // const dispatch = useDispatch();
-
-  // const filtered = data.filter((item) => item.fleetOwner === user._id);
-
-  // const handleDetailRoute = (route) => {
-  //   dispatch(addRoute(route));
-  //   dispatch(visibilityChange(true));
-  // };
 
   const handleDeleteUserCard = async (id) => {
     const res = await fetch(

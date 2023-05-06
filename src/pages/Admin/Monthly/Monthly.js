@@ -18,11 +18,16 @@ function Monthly() {
 
   const selectedMonth = useSelector((state) => state.monthlyInstallment.month);
   const selectedYear = useSelector((state) => state.monthlyInstallment.year);
-
+  
+  const userRoles = useSelector((state) => {
+    console.log('state -->', state)
+    return state.users.roles;
+  });
+  
   const { data, loading, error, reFetchUser } = useFetch(`/private/installment/specificMonth/${selectedYear}/${selectedMonth}`);
-
+  
   const nextMonth = () => {
-    console.log(1);
+    console.log('userRoles -->',  userRoles);
     if (selectedMonth === 12) {
       dispatch(setMonth(1));
       dispatch(setYear(selectedYear + 1));
@@ -54,7 +59,7 @@ function Monthly() {
                 <i className="fas fa-chevron-left mr-5 text-lg cursor-pointer"></i>
                 </button>
                 
-                <div className="w-1/12 text-center text-xl">
+                <div className="w-full xl:w-1/12 text-center text-xl">
                   <span>{moment(`01-${selectedMonth}-2000`, 'dd-MM-YYYY').format('MMMM')}</span>
                   <span className="ml-1">{selectedYear}</span>
                 </div>
@@ -70,12 +75,7 @@ function Monthly() {
                 </>
               ) : (
                 <>
-                  {loading && <Loading></Loading>}
-                  {!loading && (
-                  <>
                     <Table installments={data.data} loading={loading} reFetchUser={reFetchUser}></Table>
-                  </>
-                  )}
                 </>
               )}
           </main>

@@ -4,10 +4,13 @@ export const userSlice = createSlice({
   name: "users",
   initialState: {
     user: JSON.parse(localStorage.getItem("user")) || false,
+    roles: []
   },
   reducers: {
     login: (state, action) => {
-      state.user = action.payload;
+      console.log('action.payload -->', action.payload);
+      state.user = action.payload.user;
+      state.roles = action.payload.roles;
     },
     logout: (state) => {
       state.user = false;
