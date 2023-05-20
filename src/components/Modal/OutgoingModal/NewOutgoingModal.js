@@ -12,7 +12,7 @@ export default function NewOutgoingModal({setNewOutgoingModalShow, reFetchOutogi
 
   const [userCards, setUserCards] = useState()
   const { data, loading, error, reFetchUser } = useFetch("/private/usercard");
-
+  const user = useSelector((state) => state.users.user);
   const tlCurr =Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' })
 
   if (!loading && (!data.type || error.length > 0)) {
@@ -51,6 +51,7 @@ export default function NewOutgoingModal({setNewOutgoingModalShow, reFetchOutogi
         return toast.error('Lütfen kart seçiniz!!')
       }
       const requestBody = {
+        userId: user.user_id,
         userCardId: userCardId,
         total_amount: totalAmount,
         total_installment_count: totalInstallmentCount,

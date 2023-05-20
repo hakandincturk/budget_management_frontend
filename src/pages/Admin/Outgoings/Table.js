@@ -4,6 +4,7 @@ import OutgoingDetailModal from "../../../components/Modal/OutgoingModal/Outgoin
 import NewOutgoingModal from "../../../components/Modal/OutgoingModal/NewOutgoingModal";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from "react-tooltip";
+import { toast } from "react-hot-toast";
 
 import moment from "moment";
 import 'moment/locale/tr'
@@ -17,6 +18,26 @@ function Table({ outgoings, loading,  reFetchUser }) {
   const openOutgoingDetailModal = async (outgoingId) => {
     setOutgoingId(outgoingId)
     setOutgoingDetailModalShow(!outgoingDetailModalShow);
+  }
+
+  const handleDeleteOutgoing = async (id) => {
+    const res = await fetch(
+      `${process.env.REACT_APP_MAIN_URL}/private/outgoing/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "access-token": localStorage.getItem("access-token"),
+        },
+      }
+    );
+    const data = await res.json();
+    if (data.type) {
+      await toast.success(data.message, {duration: 3000});
+      await reFetchUser();
+    } else {
+      await toast.error(data.message, {duration: 3000});
+    }
   }
 
   const tlCurr =Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' })
@@ -96,8 +117,8 @@ function Table({ outgoings, loading,  reFetchUser }) {
                               <i className="fas fa-pen"></i>
                             </div>
                             <div
-                              to={`/edit-fleet/${outgoing.id}`}
-                              className="w-4 mr-2 transform tooltipSoon"
+                              onClick={() => handleDeleteOutgoing(outgoing.id)}
+                              className="w-4 mr-2 transform hover:text-red-500 hover:scale-110 cursor:pointer"
                             >
                               <i className="fas fa-trash-alt"></i>
                             </div>

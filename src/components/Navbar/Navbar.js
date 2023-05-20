@@ -38,7 +38,7 @@ function Navbar() {
                   window.location.pathname === "/add-customer" &&
                   "active-nav-link opacity-100"
                 }`}
-                to="/add-customer"
+                to="/user-settings"
               >
                 <i className="fas fa-user mr-3"></i>
                 Kullanıcı İşlemleri

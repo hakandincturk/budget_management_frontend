@@ -15,6 +15,7 @@ import Register from "./pages/Admin/Register";
 import UserCards from "./pages/Admin/UserCards/ListUserCards";
 import Outgoings from "./pages/Admin/Outgoings/Outgoings";
 import Monthly from "./pages/Admin/Monthly/Monthly";
+import UserSettings from "./pages/Admin/UserSettings/UserSettings";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ function App() {
         <Route path="/usercards" element={user ? <UserCards /> : <Navigate to="/login" />}></Route>
         <Route path="/outgoings" element={user ? <Outgoings /> : <Navigate to="/login" />}></Route>
         <Route path="/monthly" element={user ? <Monthly /> : <Navigate to="/login" />}></Route>
+        <Route path="/user-settings" element={user ? <UserSettings /> : <Navigate to="/login" />}></Route>
 
 
       </Routes>
